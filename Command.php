@@ -98,7 +98,7 @@ class Command
             ));
         }
 
-        $process = new Process($imageMagickPath.'convert -version 2>&1');
+        $process = new Process([$imageMagickPath.'convert', '-version 2>&1']);
 
         $process->run();
         if (!$process->isSuccessful()) {
@@ -162,7 +162,7 @@ class Command
             throw new \InvalidArgumentException('The run mode must be one of '.__CLASS__.'::RUN_* constants.');
         }
 
-        $process = new Process($this->env.' '.$this->command.' '.$this->commandToAppend.$runMode);
+        $process = Process::fromShellCommandline($this->getCommand(), null, [$this->env]);
 
         $output = '';
         $error = '';

@@ -29,7 +29,7 @@ class AbstractTestCase extends TestCase
         $this->resourcesDir = TEST_RESOURCES_DIR;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $dir = TEST_RESOURCES_DIR.'/outputs';
         foreach (scandir($dir) as $file) {

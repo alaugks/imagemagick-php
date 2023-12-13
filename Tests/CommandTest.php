@@ -21,19 +21,11 @@ class CommandTest extends AbstractTestCase
      */
     public function testWrongConvertDirs($path, $expectedMessage, $expectedException)
     {
-        $exception = '';
-        $exceptionClass = '';
-
-        $path = str_replace('\\', '/', $path);
-        $expectedMessage = str_replace('\\', '/', $expectedMessage);
-        try {
-            new Command($path);
-        } catch (\Exception $e) {
-            $exception = $e->getMessage();
-            $exceptionClass = get_class($e);
-        }
-        $this->assertContains($expectedMessage, $exception);
-        $this->assertEquals($exceptionClass, $expectedException);
+        $path = \str_replace('\\', '/', $path);
+        $expectedMessage = \str_replace('\\', '/', $expectedMessage);
+        $this->expectExceptionMessage($expectedMessage);
+        $this->expectException($expectedException);
+        new Command($path);
     }
 
     public function provideWrongConvertDirs()
@@ -84,7 +76,7 @@ class CommandTest extends AbstractTestCase
 
         $content = $response->getOutput();
 
-        $this->assertContains(sprintf(
+        $this->assertStringContainsString(sprintf(
             '%s %s %s %s %s',
             $imageToIdentify,
             $expectedFormat,
@@ -172,11 +164,9 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testWrongExecutable()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $command = new Command(IMAGEMAGICK_DIR);
         $command->getExecutable('this_executable_might_not_exist');
     }
@@ -192,7 +182,7 @@ class CommandTest extends AbstractTestCase
         } catch (\Exception $e) {
             $exception = $e->getMessage();
         }
-        $this->assertContains(sprintf("The file \"%s\" is not found.", $file), $exception);
+        $this->assertStringContainsString(sprintf("The file \"%s\" is not found.", $file), $exception);
     }
 
     public function testEscape()

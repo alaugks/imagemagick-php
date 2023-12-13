@@ -79,7 +79,7 @@ class ColorsTest extends TestCase
         } catch (\InvalidArgumentException $e) {
             $msg = $e->getMessage();
         }
-        $this->assertContains(
+        $this->assertStringContainsString(
             sprintf('The specified color (%s) is invalid', $color),
             $msg
         );

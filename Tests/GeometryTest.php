@@ -37,7 +37,7 @@ class GeometryTest extends AbstractTestCase
             return;
         }
 
-        $this->assertInternalType('string', $validatedGeometry);
+        $this->assertIsString($validatedGeometry);
         $this->assertNotEmpty($validatedGeometry);
 
         if ('' === $validatedGeometry) {

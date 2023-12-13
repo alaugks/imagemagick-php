@@ -70,7 +70,7 @@ class InterlaceTypesTest extends TestCase
         } catch (\InvalidArgumentException $e) {
             $msg = $e->getMessage();
         }
-        $this->assertContains(
+        $this->assertStringContainsString(
             sprintf('The specified interlace type (%s) is invalid', strtolower(trim($interlaceType))),
             $msg
         );
